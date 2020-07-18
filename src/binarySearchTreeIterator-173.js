@@ -1,0 +1,54 @@
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ */
+var BSTIterator = function(root) {
+  // traverse by inorder
+  // left self right - asc
+  // right self left - desc
+  this.stack = []
+  let self = this;
+  function traverse(node) {
+    if (!node) {
+      return node;
+    }
+    if (node.right) {
+      traverse(node.right);
+    }
+    self.stack.push(node.val);
+    if (node.left) {
+      traverse(node.left);
+    }
+  }
+  traverse(root);
+};
+
+/**
+ * @return the next smallest number
+ * @return {number}
+ */
+BSTIterator.prototype.next = function() {
+  return this.stack.pop();
+};
+
+/**
+ * @return whether we have a next smallest number
+ * @return {boolean}
+ */
+BSTIterator.prototype.hasNext = function() {
+  return this.stack.length > 0;
+};
+
+/** 
+ * Your BSTIterator object will be instantiated and called as such:
+ * var obj = new BSTIterator(root)
+ * var param_1 = obj.next()
+ * var param_2 = obj.hasNext()
+ */
